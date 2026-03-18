@@ -40,7 +40,8 @@ const categories = ['Tous', ...new Set(portfolio.map(p => p.category))];
     <div class="portfolio-full-inner">
       <div class="portfolio-masonry" id="portfolioGrid">
         {portfolio.map(item => (
-          <div class="portfolio-card reveal" data-cat={item.category}>
+          <div class="portfolio-card reveal" data-cat={item.category}
+               data-img={item.image} data-title={item.title} data-catname={item.category}>
             <div class="portfolio-card-img">
               {item.image
                 ? <img src={item.image} alt={item.title} loading="lazy"/>
@@ -49,10 +50,25 @@ const categories = ['Tous', ...new Set(portfolio.map(p => p.category))];
               <div class="portfolio-card-overlay">
                 <div class="portfolio-card-title">{item.title}</div>
                 <div class="portfolio-card-cat">{item.category}</div>
+                <div class="portfolio-zoom">⊕</div>
               </div>
             </div>
           </div>
         ))}
+
+      <!-- LIGHTBOX -->
+      <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">✕</button>
+        <button class="lightbox-prev" id="lightboxPrev" aria-label="Précédent">‹</button>
+        <button class="lightbox-next" id="lightboxNext" aria-label="Suivant">›</button>
+        <div class="lightbox-content">
+          <img id="lightboxImg" src="" alt=""/>
+          <div class="lightbox-caption">
+            <div class="lightbox-title" id="lightboxTitle"></div>
+            <div class="lightbox-cat"   id="lightboxCat"></div>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   </section>
@@ -145,6 +161,54 @@ const categories = ['Tous', ...new Set(portfolio.map(p => p.category))];
 
 .portfolio-card.hidden { display:none; }
 
+/* zoom icon */
+.portfolio-zoom {
+  font-size:22px;margin-top:10px;opacity:0.7;
+}
+
+/* LIGHTBOX */
+.lightbox {
+  display:none;position:fixed;inset:0;z-index:300;
+  background:rgba(10,12,20,0.95);
+  align-items:center;justify-content:center;
+  animation:lbIn 0.25s ease;
+}
+.lightbox.open { display:flex; }
+@keyframes lbIn {
+  from{opacity:0} to{opacity:1}
+}
+.lightbox-content {
+  position:relative;max-width:90vw;max-height:88vh;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+}
+.lightbox-content img {
+  max-width:90vw;max-height:78vh;
+  object-fit:contain;border-radius:4px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+}
+.lightbox-caption { text-align:center; }
+.lightbox-title {
+  font-family:'Barlow Condensed',sans-serif;font-size:22px;
+  font-weight:700;text-transform:uppercase;letter-spacing:1px;color:white;
+}
+.lightbox-cat { font-size:12px;color:var(--red);text-transform:uppercase;letter-spacing:2px;margin-top:4px; }
+.lightbox-close {
+  position:fixed;top:24px;right:28px;
+  background:none;border:1px solid rgba(255,255,255,0.2);color:white;
+  width:40px;height:40px;border-radius:50%;font-size:18px;
+  cursor:pointer;transition:all 0.2s;z-index:1;
+}
+.lightbox-close:hover { background:var(--red);border-color:var(--red); }
+.lightbox-prev,.lightbox-next {
+  position:fixed;top:50%;transform:translateY(-50%);
+  background:none;border:1px solid rgba(255,255,255,0.2);color:white;
+  width:48px;height:48px;border-radius:50%;font-size:28px;
+  cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;
+}
+.lightbox-prev { left:20px; }
+.lightbox-next { right:20px; }
+.lightbox-prev:hover,.lightbox-next:hover { background:var(--red);border-color:var(--red); }
+
 @media(max-width:900px){
   .page-hero { padding:120px 24px 60px; }
   .filter-section { padding:24px; }
@@ -155,7 +219,57 @@ const categories = ['Tous', ...new Set(portfolio.map(p => p.category))];
 </style>
 
 <script>
-// Filtrage portfolio
+// ── LIGHTBOX ──
+const lightbox    = document.getElementById('lightbox')!;
+const lbImg       = document.getElementById('lightboxImg') as HTMLImageElement;
+const lbTitle     = document.getElementById('lightboxTitle')!;
+const lbCat       = document.getElementById('lightboxCat')!;
+const lbClose     = document.getElementById('lightboxClose')!;
+const lbPrev      = document.getElementById('lightboxPrev')!;
+const lbNext      = document.getElementById('lightboxNext')!;
+
+let lbItems: HTMLElement[] = [];
+let lbIndex = 0;
+
+function openLightbox(index: number) {
+  lbIndex = index;
+  const card = lbItems[index];
+  lbImg.src       = card.dataset.img   || '';
+  lbImg.alt       = card.dataset.title || '';
+  lbTitle.textContent = card.dataset.title   || '';
+  lbCat.textContent   = card.dataset.catname || '';
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function navigate(dir: number) {
+  lbIndex = (lbIndex + dir + lbItems.length) % lbItems.length;
+  openLightbox(lbIndex);
+}
+
+document.querySelectorAll<HTMLElement>('.portfolio-card[data-img]').forEach((card, i) => {
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', () => {
+    lbItems = Array.from(document.querySelectorAll<HTMLElement>('.portfolio-card[data-img]:not(.hidden)'));
+    openLightbox(lbItems.indexOf(card));
+  });
+});
+
+lbClose.addEventListener('click', closeLightbox);
+lbPrev.addEventListener('click', () => navigate(-1));
+lbNext.addEventListener('click', () => navigate(1));
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft')  navigate(-1);
+  if (e.key === 'ArrowRight') navigate(1);
+});
+
+// ── FILTRAGE PORTFOLIO ──
 const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
 const cards      = document.querySelectorAll<HTMLElement>('.portfolio-card');
 

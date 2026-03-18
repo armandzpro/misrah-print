@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Kouassi Aimé",
+    "role": "Directeur Marketing",
+    "company": "Groupe Proximité",
+    "text": "Misrah Print a réalisé tous nos supports pour notre lancement événementiel en un temps record. Qualité irréprochable, équipe réactive. Je recommande vivement.",
+    "rating": 5
+  },
+  {
+    "id": 2,
+    "name": "Fatou Diallo",
+    "role": "Gérante",
+    "company": "Boutique Éclat",
+    "text": "Nos tee-shirts personnalisés et nos flyers ont fait sensation. Le rendu des couleurs est fidèle à notre identité visuelle. Livraison dans les délais, parfait.",
+    "rating": 5
+  },
+  {
+    "id": 3,
+    "name": "Brice Konan",
+    "role": "Responsable Communication",
+    "company": "Agence Innov",
+    "text": "Partenaire fiable depuis 2 ans pour tous nos kakémonos et bâches d'exposition. Sérieux, créatif et toujours à l'écoute de nos besoins spécifiques.",
+    "rating": 5
+  }
+]

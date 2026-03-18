@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /merci
 
-Sitemap: https://print.misrah-group.com/sitemap-index.xml
+Sitemap: https://print.misrah-group.com/sitemap.xml

@@ -6,26 +6,72 @@ import '../styles/global.css';
 interface Props {
   title?:       string;
   description?: string;
+  noindex?:     boolean;
 }
 
 const {
-  title       = site.name + ' — Impression & Design',
+  title       = site.name + ' — Impression & Design à Abidjan',
   description = site.desc,
+  noindex     = false,
 } = Astro.props;
+
+const canonical = `${site.url}${Astro.url.pathname}`;
+const ogImage   = `${site.url}${site.ogImage}`;
+const phone     = `+${site.socials.whatsapp.replace('https://wa.me/', '')}`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: site.name,
+  description: site.desc,
+  url: site.url,
+  telephone: phone,
+  email: site.email,
+  image: ogImage,
+  priceRange: '$$',
+  openingHours: 'Mo-Sa 08:00-18:00',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Abidjan',
+    addressCountry: 'CI',
+  },
+  sameAs: [site.socials.facebook, site.socials.instagram],
+};
 ---
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- SEO de base -->
   <meta name="description" content={description}/>
-  <meta property="og:title"       content={title}/>
-  <meta property="og:description" content={description}/>
-  <meta property="og:url"         content={site.url}/>
-  <meta property="og:type"        content="website"/>
-  <meta property="og:image"       content={`${site.url}${site.ogImage}`}/>
+  <meta name="robots"      content={noindex ? 'noindex,nofollow' : 'index,follow'}/>
+  <link rel="canonical"    href={canonical}/>
+
+  <!-- Open Graph -->
+  <meta property="og:title"        content={title}/>
+  <meta property="og:description"  content={description}/>
+  <meta property="og:url"          content={canonical}/>
+  <meta property="og:type"         content="website"/>
+  <meta property="og:image"        content={ogImage}/>
+  <meta property="og:image:width"  content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale"       content="fr_CI"/>
+  <meta property="og:site_name"    content={site.name}/>
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:title"       content={title}/>
+  <meta name="twitter:description" content={description}/>
+  <meta name="twitter:image"       content={ogImage}/>
+
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="/images/logo-misrah.png"/>
   <title>{title}</title>
+
+  <!-- JSON-LD LocalBusiness -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)}/>
 </head>
 <body>
 

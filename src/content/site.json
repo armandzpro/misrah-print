@@ -1,0 +1,16 @@
+{
+  "name":     "Misrah Print",
+  "tagline":  "Votre vision, notre impression.",
+  "desc":     "Impression numérique, conception graphique, aménagement d'espace à Abidjan.",
+  "url":      "https://print.misrah-group.com",
+  "phones":   ["07 58 67 93 08", "27 21 20 44 95"],
+  "email":    "contact@misrah-group.com",
+  "address":  "Abidjan, Côte d'Ivoire",
+  "hours":    "Lun–Sam : 8h00 – 18h00",
+  "ogImage":  "/images/og.jpg",
+  "socials": {
+    "facebook":  "https://facebook.com/misrahprint",
+    "instagram": "https://instagram.com/misrahprint",
+    "whatsapp":  "https://wa.me/2250758679308"
+  }
+}

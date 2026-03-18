@@ -1,0 +1,123 @@
+---
+// src/components/Hero.astro
+import site from '../content/site.json';
+---
+
+<section class="hero" id="home">
+  <div class="hero-bg-m">M</div>
+
+  <div class="hero-content">
+    <div class="hero-tag">{site.address}</div>
+    <h1 class="hero-title">
+      Votre vision,<br>
+      <span class="line-red">notre</span><br>
+      <span class="line-italic">impression.</span>
+    </h1>
+    <p class="hero-desc">
+      Misrah Print conçoit et réalise vos supports visuels avec précision —
+      de l'impression grand format à la conception graphique,
+      en passant par l'aménagement d'espace.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        Demander un devis
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a href="/portfolio" class="btn-secondary">Voir nos réalisations</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-card reveal">
+      <div class="stat-number">6+</div>
+      <div class="stat-label">Services</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="stat-card reveal" style="transition-delay:.1s">
+      <div class="stat-number">24h</div>
+      <div class="stat-label">Délai express</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="stat-card reveal" style="transition-delay:.2s">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Sur-mesure</div>
+    </div>
+  </div>
+</section>
+
+<style>
+.hero {
+  min-height:100vh;display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;padding:120px 60px 80px;
+  position:relative;overflow:hidden;
+}
+.hero::before {
+  content:'';position:absolute;right:-120px;top:50%;transform:translateY(-50%);
+  width:700px;height:700px;border:1.5px solid rgba(232,23,26,0.15);
+  border-radius:50%;pointer-events:none;
+}
+.hero::after {
+  content:'';position:absolute;right:-40px;top:50%;transform:translateY(-50%);
+  width:520px;height:520px;border:1px solid rgba(232,23,26,0.08);
+  border-radius:50%;pointer-events:none;
+}
+.hero-bg-m {
+  position:absolute;right:-60px;top:50%;transform:translateY(-55%);
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:600px;
+  color:rgba(232,23,26,0.04);line-height:1;pointer-events:none;user-select:none;
+}
+.hero-content { position:relative;z-index:2;animation:fadeUp 0.8s ease both; }
+.hero-tag {
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:var(--red);margin-bottom:28px;
+}
+.hero-tag::before {
+  content:'';display:block;width:36px;height:2px;background:var(--red);
+}
+.hero-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(64px,8vw,110px);font-weight:900;
+  line-height:0.92;letter-spacing:-2px;text-transform:uppercase;margin-bottom:32px;
+}
+.line-red { color:var(--red); }
+.line-italic { font-style:italic;color:var(--off-white); }
+.hero-desc {
+  font-size:16px;font-weight:300;color:var(--muted);
+  line-height:1.8;max-width:420px;margin-bottom:48px;
+}
+.hero-actions { display:flex;gap:16px;align-items:center;flex-wrap:wrap; }
+.hero-stats {
+  position:relative;z-index:2;display:flex;flex-direction:column;
+  gap:24px;align-items:flex-end;animation:fadeUp 0.8s ease 0.2s both;
+}
+.stat-card {
+  background:var(--dark2);border:1px solid var(--border);border-radius:8px;
+  padding:28px 36px;text-align:center;width:200px;transition:all 0.3s;
+}
+.stat-card:hover { border-color:var(--red);background:var(--dark3);transform:translateY(-4px); }
+.stat-number {
+  font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;
+  color:var(--red);line-height:1;letter-spacing:-2px;
+}
+.stat-label {
+  font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-top:6px;
+}
+.hero-divider {
+  width:3px;height:60px;
+  background:linear-gradient(to bottom,var(--red),transparent);align-self:center;
+}
+@keyframes fadeUp {
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:100px 24px 60px;}
+  .hero-stats,.hero-bg-m{display:none;}
+  .hero::before,.hero::after{display:none;}
+}
+</style>

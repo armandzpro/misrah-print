@@ -1,0 +1,274 @@
+---
+// src/layouts/BaseLayout.astro
+import site from '../content/site.json';
+import '../styles/global.css';
+
+interface Props {
+  title?:       string;
+  description?: string;
+}
+
+const {
+  title       = site.name + ' — Impression & Design',
+  description = site.desc,
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content={description}/>
+  <meta property="og:title"       content={title}/>
+  <meta property="og:description" content={description}/>
+  <meta property="og:url"         content={site.url}/>
+  <meta property="og:type"        content="website"/>
+  <meta property="og:image"       content={`${site.url}${site.ogImage}`}/>
+  <link rel="icon" type="image/png" href="/images/logo-misrah.png"/>
+  <title>{title}</title>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-icon">
+        <img src="/images/logo-misrah.png" alt="Misrah Print logo"/>
+      </div>
+      <div>
+        <div class="nav-logo-text">Misrah<span>print</span></div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#about">À propos</a></li>
+      <li><a href="/portfolio">Réalisations</a></li>
+      <li><a href="/#contact" class="nav-cta">Devis gratuit</a></li>
+    </ul>
+    <!-- Mobile burger -->
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#about">À propos</a></li>
+      <li><a href="/portfolio">Réalisations</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <main>
+    <slot/>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="nav-logo">
+          <div class="nav-logo-icon">
+            <img src="/images/logo-misrah.png" alt="Misrah Print logo" style="width:62px"/>
+          </div>
+          <div class="nav-logo-text" style="font-size:26px">Misrah<span>print</span></div>
+        </a>
+        <p class="footer-brand-desc">
+          Votre partenaire en impression numérique et conception graphique à Abidjan.
+          Qualité, rapidité et créativité au service de votre image.
+        </p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="/#services">Impression grand format</a></li>
+          <li><a href="/#services">Découpe flex adhésif</a></li>
+          <li><a href="/#services">Impression textile</a></li>
+          <li><a href="/#services">Kakemono</a></li>
+          <li><a href="/#services">Flyers & Cartes</a></li>
+          <li><a href="/#services">Conception graphique</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Navigation</div>
+        <ul class="footer-links">
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/#about">À propos</a></li>
+          <li><a href="/portfolio">Réalisations</a></li>
+          <li><a href="/#contact">Devis gratuit</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          {site.phones.map(p => (
+            <li><a href={`tel:${p.replace(/\s/g,'')}`}>{p}</a></li>
+          ))}
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><span class="footer-address">{site.address}</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        © {new Date().getFullYear()} <strong>Misrah Print</strong> — Tous droits réservés
+      </p>
+      <div class="footer-socials">
+        <a href={site.socials.facebook}  class="social-btn" target="_blank" rel="noopener">f</a>
+        <a href={site.socials.instagram} class="social-btn" target="_blank" rel="noopener">in</a>
+        <a href={site.socials.whatsapp}  class="social-btn" target="_blank" rel="noopener">wa</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+<style>
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 60px;
+  background:rgba(30,34,46,0.88);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  transition:padding 0.3s;
+}
+.nav-logo {
+  display:flex; align-items:center; gap:6px; text-decoration:none;
+}
+.nav-logo-icon {
+  flex-shrink:0; transition:transform 0.2s;
+}
+.nav-logo-icon img {
+  width:54px; height:auto; display:block; object-fit:contain; transition:opacity 0.2s;
+}
+.nav-logo:hover .nav-logo-icon { transform:scale(1.06); }
+.nav-logo:hover .nav-logo-icon img { opacity:0.8; }
+.nav-logo-text {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:22px;font-weight:700;color:var(--white);letter-spacing:1px;line-height:1;
+}
+.nav-logo-text span { font-weight:300;color:var(--muted);margin-left:2px; }
+.nav-links { display:flex;gap:40px;list-style:none; }
+.nav-links a {
+  color:var(--muted);text-decoration:none;
+  font-size:13px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;
+  transition:color 0.2s;
+}
+.nav-links a:hover { color:var(--white); }
+.nav-cta {
+  background:var(--red)!important;color:white!important;
+  padding:10px 24px;border-radius:3px;
+}
+.nav-cta:hover { background:var(--red-dark)!important; }
+
+/* ── BURGER ── */
+.burger {
+  display:none;flex-direction:column;gap:5px;
+  background:none;border:none;cursor:pointer;padding:4px;
+}
+.burger span {
+  display:block;width:24px;height:2px;background:var(--white);
+  border-radius:2px;transition:all 0.3s;
+}
+
+/* ── MOBILE MENU ── */
+.mobile-menu {
+  display:none;position:fixed;inset:0;top:72px;
+  background:var(--dark2);z-index:90;padding:40px 24px;
+}
+.mobile-menu.open { display:block; }
+.mobile-menu ul { list-style:none;display:flex;flex-direction:column;gap:0; }
+.mobile-menu a {
+  display:block;padding:18px 0;
+  font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;
+  color:var(--white);text-decoration:none;
+  border-bottom:1px solid var(--border);transition:color 0.2s;
+}
+.mobile-menu a:hover { color:var(--red); }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--dark2);border-top:1px solid var(--border);
+  padding:60px 60px 32px;
+}
+.footer-top {
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;
+  margin-bottom:60px;
+}
+.footer-brand-desc {
+  font-size:14px;color:var(--muted);line-height:1.8;font-weight:300;
+  margin-top:20px;max-width:280px;
+}
+.footer-col-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:2px;
+  color:var(--white);margin-bottom:20px;
+}
+.footer-links { list-style:none;display:flex;flex-direction:column;gap:10px; }
+.footer-links a {
+  color:var(--muted);text-decoration:none;font-size:14px;
+  font-weight:300;transition:color 0.2s;
+}
+.footer-links a:hover { color:var(--red); }
+.footer-address { font-size:14px;font-weight:300;color:var(--muted); }
+.footer-bottom {
+  border-top:1px solid var(--border);padding-top:28px;
+  display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
+}
+.footer-copy { font-size:13px;color:var(--muted);font-weight:300; }
+.footer-copy strong { color:var(--red);font-weight:600; }
+.footer-socials { display:flex;gap:12px; }
+.social-btn {
+  width:38px;height:38px;border:1px solid var(--border);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);text-decoration:none;font-size:14px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  transition:all 0.2s;
+}
+.social-btn:hover { border-color:var(--red);color:var(--red);background:rgba(232,23,26,0.06); }
+
+@media(max-width:900px){
+  nav { padding:16px 24px; }
+  .nav-links { display:none; }
+  .burger { display:flex; }
+  .footer-top { grid-template-columns:1fr 1fr;gap:36px; }
+  footer { padding:48px 24px 28px; }
+}
+</style>
+
+<script>
+// NAV shrink (desktop only — let CSS handle mobile padding)
+function updateNavPadding() {
+  const nav = document.getElementById('navbar');
+  if (!nav || window.innerWidth <= 900) { nav?.style.removeProperty('padding'); return; }
+  nav.style.padding = window.scrollY > 50 ? '12px 60px' : '20px 60px';
+}
+window.addEventListener('scroll', updateNavPadding, { passive: true });
+window.addEventListener('resize', updateNavPadding, { passive: true });
+
+// Burger
+const burger     = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+burger?.addEventListener('click', () => {
+  mobileMenu?.classList.toggle('open');
+});
+mobileMenu?.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => io.observe(el));
+</script>

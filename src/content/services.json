@@ -1,0 +1,38 @@
+[
+  {
+    "num": "01",
+    "icon": "🖨️",
+    "name": "Impression Grand Format",
+    "desc": "Bâches, vinyles, banderoles et supports XXL imprimés avec une précision de couleur exceptionnelle pour un impact maximal."
+  },
+  {
+    "num": "02",
+    "icon": "✂️",
+    "name": "Découpe Flex & Adhésif",
+    "desc": "Habillage de véhicules, vitrines, stickers personnalisés. Découpe de précision sur tous supports."
+  },
+  {
+    "num": "03",
+    "icon": "👕",
+    "name": "Impression Tee-shirt",
+    "desc": "Personnalisez vos vêtements — flocage, sérigraphie et sublimation pour particuliers, équipes et entreprises."
+  },
+  {
+    "num": "04",
+    "icon": "📜",
+    "name": "Kakemono & Roll-up",
+    "desc": "Présentoirs et kakémonos professionnels pour vos événements, salons et points de vente."
+  },
+  {
+    "num": "05",
+    "icon": "📄",
+    "name": "Flyers & Cartes de visite",
+    "desc": "Supports print de qualité — flyers, brochures, catalogues, cartes de visite et papeterie d'entreprise."
+  },
+  {
+    "num": "06",
+    "icon": "🎨",
+    "name": "Conception Graphique",
+    "desc": "Identité visuelle, logos, maquettes et créations sur-mesure. Votre image pensée et construite par nos designers."
+  }
+]

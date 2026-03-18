@@ -1,0 +1,240 @@
+---
+// src/pages/index.astro
+import BaseLayout   from '../layouts/BaseLayout.astro';
+import Hero         from '../components/Hero.astro';
+import Marquee      from '../components/Marquee.astro';
+import Services     from '../components/Services.astro';
+import ContactForm  from '../components/ContactForm.astro';
+import portfolio    from '../content/portfolio.json';
+---
+
+<BaseLayout>
+
+  <Hero/>
+  <Marquee/>
+  <Services/>
+
+  <!-- ── ABOUT ── -->
+  <section id="about" class="about-section">
+    <div class="about-visual reveal">
+      <div class="about-logo-display">
+        <div class="logo-circle">
+          <img src="/images/logo-misrah.png" alt="Misrah Print logo"/>
+        </div>
+        <div class="about-brand-name">
+          <span>Misrah</span><span>print</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-tag">Notre histoire</div>
+      <h2 class="section-title reveal">Créativité &<br><em>excellence</em></h2>
+      <p class="about-lead reveal">
+        Misrah Print est votre partenaire de confiance pour tous vos projets
+        d'impression et de communication visuelle à Abidjan.
+      </p>
+      <p class="about-body reveal">
+        Forts d'une expertise pointue en impression numérique et en conception graphique,
+        nous accompagnons entreprises, agences et particuliers dans la concrétisation
+        de leurs projets les plus ambitieux — du simple flyer à l'habillage complet
+        d'espaces commerciaux.
+      </p>
+      <div class="about-features reveal">
+        {[
+          'Équipements haute résolution','Délais rapides garantis',
+          'Matériaux premium','Livraison possible',
+          'Petit & grand format','Sur-mesure toujours',
+        ].map(f => (
+          <div class="about-feature">
+            <div class="feature-dot"></div>
+            {f}
+          </div>
+        ))}
+      </div>
+      <a href="#contact" class="btn-primary reveal">Nous contacter</a>
+    </div>
+  </section>
+
+  <!-- ── PROCESS ── -->
+  <section class="process-section">
+    <div class="process-inner">
+      <div class="section-tag">Comment ça marche</div>
+      <h2 class="section-title reveal">Notre <em>processus</em></h2>
+      <div class="process-steps">
+        {[
+          { n:'01', title:'Brief & Devis',
+            desc:'Décrivez votre projet. Nous vous répondons avec un devis transparent et adapté à votre budget.' },
+          { n:'02', title:'Création & BAT',
+            desc:'Nos graphistes conçoivent ou adaptent vos fichiers. Vous validez un bon à tirer avant toute impression.' },
+          { n:'03', title:'Impression',
+            desc:'Production sur nos équipements haute définition. Contrôle qualité à chaque étape.' },
+          { n:'04', title:'Livraison',
+            desc:"Récupérez vos supports en boutique ou bénéficiez de notre service de livraison sur Abidjan." },
+        ].map((s, i) => (
+          <div class="step reveal" style={`transition-delay:${i*0.07}s`}>
+            <div class="step-number">{s.n}</div>
+            <div class="step-title">{s.title}</div>
+            <p class="step-desc">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PORTFOLIO TEASER ── -->
+  <section id="portfolio-teaser" class="portfolio-section">
+    <div class="portfolio-inner">
+      <div class="portfolio-header">
+        <div>
+          <div class="section-tag">Galerie</div>
+          <h2 class="section-title reveal">Nos <em>réalisations</em></h2>
+        </div>
+        <a href="/portfolio" class="btn-secondary reveal">Voir tout le portfolio</a>
+      </div>
+
+      <div class="portfolio-grid reveal">
+        {portfolio.map((item) => (
+          <div class={`portfolio-item${item.featured ? ' featured' : ''}`}>
+            <div class="portfolio-inner-wrap">
+              {item.image
+                ? <img src={item.image} alt={item.title} loading="lazy"/>
+                : <div class="portfolio-placeholder">{item.category}</div>
+              }
+            </div>
+            <div class="portfolio-label">
+              <div class="portfolio-label-title">{item.title}</div>
+              <div class="portfolio-label-cat">{item.category}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ContactForm/>
+
+</BaseLayout>
+
+<style>
+/* ABOUT */
+.about-section {
+  background:var(--dark2);display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;padding:120px 60px;
+}
+.about-logo-display {
+  width:100%;aspect-ratio:1;max-width:440px;
+  background:var(--dark3);border-radius:12px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+}
+.about-logo-display::before {
+  content:'';position:absolute;inset:-1px;
+  background:linear-gradient(135deg,var(--red) 0%,transparent 50%);
+  border-radius:12px;opacity:0.2;
+}
+.logo-circle {
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:2;
+}
+.logo-circle img {
+  width:320px;height:auto;object-fit:contain;
+}
+.about-brand-name {
+  position:absolute;bottom:40px;left:0;right:0;text-align:center;z-index:2;
+}
+.about-brand-name span:first-child {
+  font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:700;letter-spacing:2px;
+}
+.about-brand-name span:last-child {
+  font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:300;
+  color:var(--muted);letter-spacing:2px;
+}
+.about-lead { font-size:17px;font-weight:400;color:var(--off-white);line-height:1.8;margin-bottom:20px; }
+.about-body { font-size:15px;font-weight:300;color:var(--muted);line-height:1.9;margin-bottom:40px; }
+.about-features {
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:44px;
+}
+.about-feature {
+  display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--off-white);
+}
+.feature-dot {
+  width:6px;height:6px;background:var(--red);border-radius:50%;flex-shrink:0;margin-top:6px;
+}
+
+/* PROCESS */
+.process-section { background:var(--dark);padding:120px 60px; }
+.process-inner { max-width:1200px;margin:0 auto; }
+.process-steps { display:grid;grid-template-columns:repeat(4,1fr);gap:2px; }
+.step {
+  background:var(--dark2);padding:48px 32px;position:relative;
+  overflow:hidden;transition:background 0.3s;
+}
+.step:hover { background:var(--dark3); }
+.step::after {
+  content:'';position:absolute;top:0;right:0;width:1px;height:100%;background:var(--border);
+}
+.step:last-child::after { display:none; }
+.step-number {
+  font-family:'Barlow Condensed',sans-serif;font-size:80px;font-weight:900;
+  color:rgba(232,23,26,0.07);line-height:1;margin-bottom:20px;transition:color 0.3s;
+}
+.step:hover .step-number { color:rgba(232,23,26,0.14); }
+.step-title {
+  font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;
+}
+.step-desc { font-size:14px;color:var(--muted);line-height:1.7;font-weight:300; }
+
+/* PORTFOLIO */
+.portfolio-section { background:var(--dark2);padding:120px 60px; }
+.portfolio-inner { max-width:1200px;margin:0 auto; }
+.portfolio-header {
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:48px;flex-wrap:wrap;gap:24px;
+}
+.portfolio-header .section-title { margin-bottom:0; }
+.portfolio-grid {
+  display:grid;grid-template-columns:2fr 1fr 1fr;
+  grid-template-rows:260px 200px;gap:4px;
+}
+.portfolio-item {
+  background:var(--dark3);border-radius:4px;overflow:hidden;
+  position:relative;cursor:pointer;
+}
+.portfolio-item.featured { grid-row:1/3; }
+.portfolio-inner-wrap {
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  background:var(--dark4);transition:all 0.4s;position:relative;overflow:hidden;
+}
+.portfolio-inner-wrap img {
+  width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;
+}
+.portfolio-item:hover .portfolio-inner-wrap img { transform:scale(1.05); }
+.portfolio-item:hover .portfolio-inner-wrap { background:rgba(232,23,26,0.08); }
+.portfolio-placeholder {
+  font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;
+  color:rgba(255,255,255,0.04);text-transform:uppercase;letter-spacing:2px;
+  text-align:center;line-height:1.1;padding:20px;
+}
+.portfolio-label {
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(20,24,36,0.95));
+  padding:32px 24px 20px;transform:translateY(100%);transition:transform 0.35s ease;
+}
+.portfolio-item:hover .portfolio-label { transform:translateY(0); }
+.portfolio-label-title {
+  font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;
+}
+.portfolio-label-cat { font-size:12px;color:var(--red);text-transform:uppercase;letter-spacing:2px; }
+
+@media(max-width:900px){
+  .about-section { grid-template-columns:1fr;gap:40px;padding:80px 24px; }
+  .about-visual { display:none; }
+  .process-section { padding:80px 24px; }
+  .process-steps { grid-template-columns:1fr 1fr; }
+  .portfolio-section { padding:80px 24px; }
+  .portfolio-grid { grid-template-columns:1fr;grid-template-rows:auto; }
+  .portfolio-item.featured { grid-row:auto; }
+  .portfolio-item { height:240px; }
+}
+</style>

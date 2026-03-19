@@ -1,50 +1,84 @@
 ---
-import clients from '../content/clients.json';
-// On double la liste pour l'effet défilement infini
+import clients      from '../content/clients.json';
+import testimonials from '../content/testimonials.json';
 const doubled = [...clients, ...clients];
 ---
 
-<section class="trusted-section reveal">
-  <div class="trusted-header">
-    <span class="section-label">Références</span>
-    <h2>Ils nous ont fait <span>confiance</span></h2>
-    <p>Des entreprises et organisations qui nous ont choisis pour leur communication visuelle.</p>
+<section class="social-proof">
+
+  <!-- ── LOGOS ── -->
+  <div class="sp-logos-block">
+    <div class="sp-header reveal">
+      <span class="section-label">Références</span>
+      <h2>Ils nous ont fait <span>confiance</span></h2>
+      <p>Des entreprises qui nous font confiance pour leur communication visuelle.</p>
+    </div>
+
+    <div class="sp-track-wrapper">
+      <div class="sp-track">
+        {doubled.map((c: any) => (
+          <div class="sp-card">
+            {c.logo
+              ? <img src={c.logo} alt={`Logo ${c.nom}`} class="sp-logo-img"/>
+              : (
+                <div class="sp-initiales" style={`background:${c.couleur}18;border-color:${c.couleur}30`}>
+                  <span style={`color:${c.couleur}`}>{c.initiales}</span>
+                </div>
+              )
+            }
+            <div class="sp-client-info">
+              <strong>{c.nom}</strong>
+              <span>{c.secteur}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   </div>
 
-  <div class="trusted-track-wrapper">
-    <div class="trusted-track">
-      {doubled.map((c: any) => (
-        <div class="trusted-card">
-          {c.logo
-            ? <img src={c.logo} alt={`Logo ${c.nom}`} class="trusted-logo-img"/>
-            : (
-              <div class="trusted-initiales" style={`background:${c.couleur}18;border-color:${c.couleur}30`}>
-                <span style={`color:${c.couleur}`}>{c.initiales}</span>
-              </div>
-            )
-          }
-          <div class="trusted-info">
-            <strong>{c.nom}</strong>
-            <span>{c.secteur}</span>
+  <!-- ── SÉPARATEUR ── -->
+  <div class="sp-divider">
+    <span>Ce qu'ils disent de nous</span>
+  </div>
+
+  <!-- ── TÉMOIGNAGES ── -->
+  <div class="sp-testimonials-block">
+    <div class="sp-testimonials-grid">
+      {testimonials.map((t: any, i: number) => (
+        <div class="sp-tcard reveal" style={`transition-delay:${i * 0.1}s`}>
+          <div class="sp-tcard-quote">"</div>
+          <p class="sp-tcard-text">{t.text}</p>
+          <div class="sp-tcard-footer">
+            <div class="sp-tcard-stars">
+              {Array.from({ length: t.rating }).map(() => <span class="sp-star">★</span>)}
+            </div>
+            <div class="sp-tcard-author">
+              <div class="sp-author-name">{t.name}</div>
+              <div class="sp-author-role">{t.role} · {t.company}</div>
+            </div>
           </div>
         </div>
       ))}
     </div>
   </div>
+
 </section>
 
 <style>
-.trusted-section {
+/* ── SECTION GLOBALE ── */
+.social-proof {
   background: #f5f2ef;
-  padding: 90px 0;
+  padding: 90px 0 100px;
   overflow: hidden;
 }
-.trusted-header {
+
+/* ── HEADER ── */
+.sp-header {
   text-align: center;
   padding: 0 24px;
   margin-bottom: 52px;
 }
-.trusted-header h2 {
+.sp-header h2 {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: clamp(32px, 5vw, 52px);
   font-weight: 800;
@@ -53,88 +87,136 @@ const doubled = [...clients, ...clients];
   margin: 10px 0 12px;
   line-height: 1;
 }
-.trusted-header h2 span { color: var(--red); }
-.trusted-header p { font-size: 15px; color: #6b7280; }
-.trusted-header .section-label { color: var(--red); }
+.sp-header h2 span { color: var(--red); }
+.sp-header p { font-size: 15px; color: #6b7280; max-width: 520px; margin: 0 auto; }
+.sp-header .section-label { color: var(--red); }
 
-/* Défilement infini */
-.trusted-track-wrapper {
+/* ── LOGO TRACK ── */
+.sp-track-wrapper {
   position: relative;
   overflow: hidden;
 }
-.trusted-track-wrapper::before,
-.trusted-track-wrapper::after {
+.sp-track-wrapper::before,
+.sp-track-wrapper::after {
   content: '';
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 120px;
-  z-index: 2;
+  position: absolute; top: 0; bottom: 0;
+  width: 120px; z-index: 2;
 }
-.trusted-track-wrapper::before {
-  left: 0;
-  background: linear-gradient(to right, #f5f2ef, transparent);
-}
-.trusted-track-wrapper::after {
-  right: 0;
-  background: linear-gradient(to left, #f5f2ef, transparent);
-}
+.sp-track-wrapper::before { left: 0; background: linear-gradient(to right, #f5f2ef, transparent); }
+.sp-track-wrapper::after  { right: 0; background: linear-gradient(to left,  #f5f2ef, transparent); }
 
-.trusted-track {
-  display: flex;
-  gap: 24px;
+.sp-track {
+  display: flex; gap: 20px;
   width: max-content;
-  animation: scroll 28s linear infinite;
+  animation: spScroll 26s linear infinite;
 }
-.trusted-track:hover { animation-play-state: paused; }
+.sp-track:hover { animation-play-state: paused; }
 
-@keyframes scroll {
+@keyframes spScroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 
-.trusted-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.sp-card {
+  display: flex; align-items: center; gap: 14px;
   background: white;
   border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  padding: 16px 24px;
+  border-radius: 8px;
+  padding: 14px 22px;
   min-width: 200px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   transition: box-shadow 0.2s, transform 0.2s;
-  cursor: default;
 }
-.trusted-card:hover {
-  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
-  transform: translateY(-2px);
-}
+.sp-card:hover { box-shadow: 0 6px 22px rgba(0,0,0,0.10); transform: translateY(-2px); }
 
-.trusted-logo-img {
-  width: 48px; height: 48px;
-  object-fit: contain;
+.sp-logo-img {
+  width: 44px; height: 44px;
+  object-fit: contain; border-radius: 4px;
 }
-.trusted-initiales {
-  width: 48px; height: 48px;
-  border-radius: 10px;
-  border: 1px solid;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
+.sp-initiales {
+  width: 44px; height: 44px;
+  border-radius: 8px; border: 1px solid;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.trusted-initiales span {
+.sp-initiales span {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 18px; font-weight: 800;
+  font-size: 17px; font-weight: 800;
 }
-.trusted-info {
-  display: flex; flex-direction: column; gap: 2px;
-}
-.trusted-info strong {
+.sp-client-info { display: flex; flex-direction: column; gap: 2px; }
+.sp-client-info strong {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px; font-weight: 700;
+  font-size: 15px; font-weight: 700;
   color: #1e222e; white-space: nowrap;
 }
-.trusted-info span {
-  font-size: 11px; color: #9ca3af;
-  text-transform: uppercase; letter-spacing: 1px;
+.sp-client-info span { font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── SÉPARATEUR ── */
+.sp-divider {
+  display: flex; align-items: center; gap: 20px;
+  max-width: 1200px; margin: 64px auto 56px;
+  padding: 0 60px;
+}
+.sp-divider::before,
+.sp-divider::after {
+  content: ''; flex: 1;
+  height: 1px; background: #ddd;
+}
+.sp-divider span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #9ca3af; white-space: nowrap;
+}
+
+/* ── TÉMOIGNAGES ── */
+.sp-testimonials-block {
+  max-width: 1200px; margin: 0 auto;
+  padding: 0 60px;
+}
+.sp-testimonials-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.sp-tcard {
+  background: white;
+  border-radius: 8px;
+  padding: 32px 28px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 2px 18px rgba(30,34,46,0.07);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.sp-tcard:hover { transform: translateY(-5px); box-shadow: 0 12px 38px rgba(30,34,46,0.13); }
+.sp-tcard::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; width: 0; height: 3px;
+  background: var(--red); transition: width 0.4s ease;
+}
+.sp-tcard:hover::after { width: 100%; }
+
+.sp-tcard-quote {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 64px; font-weight: 900;
+  line-height: 0.7; color: var(--red);
+  opacity: 0.15; margin-bottom: 14px;
+}
+.sp-tcard-text {
+  font-size: 14px; color: #444;
+  line-height: 1.8; margin-bottom: 24px;
+}
+.sp-tcard-footer { display: flex; flex-direction: column; gap: 8px; }
+.sp-tcard-stars  { display: flex; gap: 3px; }
+.sp-star         { color: var(--red); font-size: 15px; }
+.sp-author-name  {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 700;
+  text-transform: uppercase; color: #1e222e;
+}
+.sp-author-role  { font-size: 12px; color: #888; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .social-proof { padding: 70px 0 80px; }
+  .sp-divider   { padding: 0 24px; }
+  .sp-testimonials-block { padding: 0 24px; }
+  .sp-testimonials-grid  { grid-template-columns: 1fr; }
 }
 </style>

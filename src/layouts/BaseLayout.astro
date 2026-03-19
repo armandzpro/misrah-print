@@ -117,13 +117,43 @@ const schema = {
     <slot/>
   </main>
 
-  <!-- WHATSAPP FLOATING BUTTON -->
-  <a href={site.socials.whatsapp} class="whatsapp-fab" target="_blank" rel="noopener"
-     aria-label="Nous contacter sur WhatsApp">
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-  </a>
+  <!-- WHATSAPP WIDGET -->
+  <div class="wa-widget" id="waWidget">
+
+    <!-- Popup -->
+    <div class="wa-popup" id="waPopup">
+      <div class="wa-popup-header">
+        <div class="wa-header-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <div>
+          <p class="wa-title">Discuter avec un expert</p>
+          <p class="wa-sub">Choisissez une personne pour discuter</p>
+        </div>
+      </div>
+      <div class="wa-agents">
+        <a href={`${site.socials.whatsapp}?text=Bonjour%2C%20je%20souhaite%20obtenir%20un%20devis%20Misrah%20Print.`}
+           class="wa-agent" target="_blank" rel="noopener">
+          <div class="wa-avatar">CM</div>
+          <div class="wa-agent-info">
+            <strong>Mr Cyriaque MABOU</strong>
+            <span>Gérant</span>
+          </div>
+          <div class="wa-agent-right">
+            <span class="wa-online-dot"></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+      </div>
+      <p class="wa-note">⚡ Réponse rapide garantie</p>
+    </div>
+
+    <!-- FAB -->
+    <button class="whatsapp-fab" id="waFab" aria-label="Discuter sur WhatsApp">
+      <svg class="wa-icon-open" width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <svg class="wa-icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -303,23 +333,115 @@ footer {
   footer { padding:48px 24px 28px; }
 }
 
-/* ── WHATSAPP FAB ── */
-.whatsapp-fab {
-  position:fixed;bottom:28px;right:28px;z-index:200;
-  width:60px;height:60px;border-radius:50%;
-  background:#25D366;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 20px rgba(37,211,102,0.45);
-  text-decoration:none;
+/* ── WHATSAPP WIDGET ── */
+.wa-widget {
+  position:fixed; bottom:28px; right:28px; z-index:200;
+  display:flex; flex-direction:column; align-items:flex-end; gap:12px;
   animation:fabIn 0.5s ease 1.2s both;
-  transition:transform 0.25s,box-shadow 0.25s;
+}
+
+/* FAB */
+.whatsapp-fab {
+  width:60px; height:60px; border-radius:50%;
+  background:#25D366; border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,0.45);
+  transition:transform 0.25s, box-shadow 0.25s;
+  position:relative; flex-shrink:0;
 }
 .whatsapp-fab::before {
-  content:'';position:absolute;inset:0;border-radius:50%;
-  background:#25D366;z-index:-1;
+  content:''; position:absolute; inset:0; border-radius:50%;
+  background:#25D366; z-index:-1;
   animation:waPulse 2.5s ease 3s infinite;
 }
-.whatsapp-fab:hover { transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,0.65); }
+.whatsapp-fab:hover { transform:scale(1.1); box-shadow:0 6px 28px rgba(37,211,102,0.65); }
+.wa-icon-close { display:none; }
+.wa-widget.open .wa-icon-open  { display:none; }
+.wa-widget.open .wa-icon-close { display:block; }
+.wa-widget.open .whatsapp-fab::before { animation:none; }
+
+/* Popup */
+.wa-popup {
+  background:white; border-radius:16px;
+  box-shadow:0 12px 48px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
+  width:300px; overflow:hidden;
+  transform:translateY(10px) scale(0.95);
+  opacity:0; pointer-events:none;
+  transition:transform 0.25s ease, opacity 0.25s ease;
+  transform-origin:bottom right;
+}
+.wa-widget.open .wa-popup {
+  transform:translateY(0) scale(1);
+  opacity:1; pointer-events:all;
+}
+
+/* Header popup */
+.wa-popup-header {
+  background:#25D366;
+  padding:16px 18px;
+  display:flex; align-items:center; gap:12px;
+}
+.wa-header-icon {
+  width:40px; height:40px; border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.wa-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:16px; font-weight:700;
+  color:white; margin:0; line-height:1.2;
+}
+.wa-sub { font-size:12px; color:rgba(255,255,255,0.82); margin:0; }
+
+/* Agent */
+.wa-agents { padding:12px; }
+.wa-agent {
+  display:flex; align-items:center; gap:12px;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid #f0f0f0;
+  text-decoration:none;
+  transition:background 0.15s, border-color 0.15s;
+  background:#fafafa;
+}
+.wa-agent:hover { background:#f0fdf4; border-color:#bbf7d0; }
+
+.wa-avatar {
+  width:44px; height:44px; border-radius:50%;
+  background:#dcfce7;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:16px; font-weight:800; color:#16a34a;
+  flex-shrink:0;
+}
+.wa-agent-info { flex:1; }
+.wa-agent-info strong {
+  display:block;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:15px; font-weight:700;
+  color:#111; line-height:1.2;
+}
+.wa-agent-info span { font-size:12px; color:#888; }
+.wa-agent-right {
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+}
+.wa-online-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:#25D366;
+  box-shadow:0 0 0 2px rgba(37,211,102,0.3);
+  animation:onlinePulse 2s ease infinite;
+}
+@keyframes onlinePulse {
+  0%,100%{ box-shadow:0 0 0 2px rgba(37,211,102,0.3); }
+  50%    { box-shadow:0 0 0 5px rgba(37,211,102,0.1); }
+}
+
+/* Note bas de popup */
+.wa-note {
+  text-align:center; font-size:11px; color:#aaa;
+  padding:8px 16px 14px; margin:0;
+}
+
 @keyframes fabIn {
   from{opacity:0;transform:scale(0.4) translateY(16px)}
   to{opacity:1;transform:scale(1) translateY(0)}
@@ -348,6 +470,16 @@ burger?.addEventListener('click', () => {
 });
 mobileMenu?.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+
+// WhatsApp widget toggle
+const waWidget = document.getElementById('waWidget');
+const waFab    = document.getElementById('waFab');
+waFab?.addEventListener('click', () => waWidget?.classList.toggle('open'));
+document.addEventListener('click', e => {
+  if (waWidget && !waWidget.contains(e.target as Node)) {
+    waWidget.classList.remove('open');
+  }
 });
 
 // Scroll reveal

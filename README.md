@@ -145,5 +145,4 @@ misrah-print/
 
 ---
 
-## 📞 Support
-En cas de question technique, reviens vers Claude avec le message d'erreur exact.
+

@@ -1,0 +1,140 @@
+---
+import clients from '../content/clients.json';
+// On double la liste pour l'effet défilement infini
+const doubled = [...clients, ...clients];
+---
+
+<section class="trusted-section reveal">
+  <div class="trusted-header">
+    <span class="section-label">Références</span>
+    <h2>Ils nous ont fait <span>confiance</span></h2>
+    <p>Des entreprises et organisations qui nous ont choisis pour leur communication visuelle.</p>
+  </div>
+
+  <div class="trusted-track-wrapper">
+    <div class="trusted-track">
+      {doubled.map((c: any) => (
+        <div class="trusted-card">
+          {c.logo
+            ? <img src={c.logo} alt={`Logo ${c.nom}`} class="trusted-logo-img"/>
+            : (
+              <div class="trusted-initiales" style={`background:${c.couleur}18;border-color:${c.couleur}30`}>
+                <span style={`color:${c.couleur}`}>{c.initiales}</span>
+              </div>
+            )
+          }
+          <div class="trusted-info">
+            <strong>{c.nom}</strong>
+            <span>{c.secteur}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+.trusted-section {
+  background: #f5f2ef;
+  padding: 90px 0;
+  overflow: hidden;
+}
+.trusted-header {
+  text-align: center;
+  padding: 0 24px;
+  margin-bottom: 52px;
+}
+.trusted-header h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #1e222e;
+  margin: 10px 0 12px;
+  line-height: 1;
+}
+.trusted-header h2 span { color: var(--red); }
+.trusted-header p { font-size: 15px; color: #6b7280; }
+.trusted-header .section-label { color: var(--red); }
+
+/* Défilement infini */
+.trusted-track-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.trusted-track-wrapper::before,
+.trusted-track-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 120px;
+  z-index: 2;
+}
+.trusted-track-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #f5f2ef, transparent);
+}
+.trusted-track-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #f5f2ef, transparent);
+}
+
+.trusted-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: scroll 28s linear infinite;
+}
+.trusted-track:hover { animation-play-state: paused; }
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.trusted-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 16px 24px;
+  min-width: 200px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: default;
+}
+.trusted-card:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+.trusted-logo-img {
+  width: 48px; height: 48px;
+  object-fit: contain;
+}
+.trusted-initiales {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  border: 1px solid;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.trusted-initiales span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 800;
+}
+.trusted-info {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.trusted-info strong {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 700;
+  color: #1e222e; white-space: nowrap;
+}
+.trusted-info span {
+  font-size: 11px; color: #9ca3af;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+</style>

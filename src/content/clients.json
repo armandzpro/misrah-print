@@ -1,0 +1,8 @@
+[
+  { "nom": "Luxury Immobilier",   "secteur": "Immobilier",  "initiales": "LI", "couleur": "#f59e0b", "logo": "/images/clients/logo-luxury-immobilier.jpg" },
+  { "nom": "Melbet",              "secteur": "Paris sportifs","initiales": "MB", "couleur": "#e8171a", "logo": "/images/clients/logo-melbet.png" },
+  { "nom": "SIIPAF",              "secteur": "Finance",     "initiales": "SI", "couleur": "#4a9eff", "logo": "/images/clients/logo-siipaf.png" },
+  { "nom": "VH",                  "secteur": "Services",    "initiales": "VH", "couleur": "#10b981", "logo": "/images/clients/logo-vh.jpg" },
+  { "nom": "Victoire Immobilier", "secteur": "Immobilier",  "initiales": "VI", "couleur": "#8b5cf6", "logo": "/images/clients/logo-victoire-immobilier.jpg" },
+  { "nom": "Wave",                "secteur": "Fintech",     "initiales": "WA", "couleur": "#06b6d4", "logo": "/images/clients/logo-wave.jpg" }
+]

@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "nom": "Flyer A6",
+    "categorie": "Flyers & Dépliants",
+    "description": "Parfait pour vos prospectus, événements et promotions.",
+    "details": ["Format : A6 (10,5 × 14,8 cm)", "Recto ou recto/verso", "Papier couché 130 g/m²", "Livraison dès 500 ex."],
+    "prixIndicatif": "À partir de 15 000 FCFA",
+    "popular": false
+  },
+  {
+    "id": 2,
+    "nom": "Flyer A5",
+    "categorie": "Flyers & Dépliants",
+    "description": "Le format référence pour vos flyers publicitaires à fort impact.",
+    "details": ["Format : A5 (14,8 × 21 cm)", "Recto ou recto/verso", "Papier couché 130 g/m²", "Livraison dès 500 ex."],
+    "prixIndicatif": "À partir de 22 000 FCFA",
+    "popular": true
+  },
+  {
+    "id": 3,
+    "nom": "Dépliant 3 volets",
+    "categorie": "Flyers & Dépliants",
+    "description": "Idéal pour présenter vos services ou une plaquette commerciale.",
+    "details": ["Format déplié : A4 (21 × 29,7 cm)", "3 volets recto/verso", "Papier couché 170 g/m²"],
+    "prixIndicatif": "À partir de 35 000 FCFA",
+    "popular": false
+  },
+  {
+    "id": 4,
+    "nom": "Kakemono / Roll-up",
+    "categorie": "Kakemono & Affichage",
+    "description": "La signalétique événementielle par excellence. Montage en 30 secondes.",
+    "details": ["Format standard : 85 × 200 cm", "Impression HD sur bâche polyester", "Pied enrouleur aluminium inclus", "Sac de transport inclus"],
+    "prixIndicatif": "À partir de 45 000 FCFA",
+    "popular": true
+  },
+  {
+    "id": 5,
+    "nom": "Affiche A3",
+    "categorie": "Kakemono & Affichage",
+    "description": "Pour vos annonces intérieures, vitrines et points de vente.",
+    "details": ["Format : A3 (29,7 × 42 cm)", "Papier photo brillant 200 g/m²", "Possibilité de plastification"],
+    "prixIndicatif": "À partir de 5 000 FCFA",
+    "popular": false
+  },
+  {
+    "id": 6,
+    "nom": "Affiche A2 / A1",
+    "categorie": "Kakemono & Affichage",
+    "description": "Grand format pour une visibilité maximale en intérieur.",
+    "details": ["Format A2 (42 × 59,4 cm) ou A1 (59,4 × 84,1 cm)", "Impression haute définition", "Support rigide disponible"],
+    "prixIndicatif": "À partir de 12 000 FCFA",
+    "popular": false
+  },
+  {
+    "id": 7,
+    "nom": "Bâche publicitaire",
+    "categorie": "Grand format & Signalétique",
+    "description": "Visibilité maximale pour vos événements, chantiers et façades.",
+    "details": ["Sur mesure (largeur jusqu'à 5 m)", "Bâche 440 g/m², résistante UV", "Œillets tous les 50 cm", "Impression pleine couleur"],
+    "prixIndicatif": "À partir de 8 000 FCFA/m²",
+    "popular": true
+  },
+  {
+    "id": 8,
+    "nom": "Panneau PVC / Dibond",
+    "categorie": "Grand format & Signalétique",
+    "description": "Signalétique rigide pour l'intérieur et l'extérieur.",
+    "details": ["PVC 5 mm ou Dibond 3 mm", "Découpe aux dimensions souhaitées", "Perçage et visserie disponibles"],
+    "prixIndicatif": "À partir de 15 000 FCFA/m²",
+    "popular": false
+  },
+  {
+    "id": 9,
+    "nom": "Carte de visite",
+    "categorie": "Cartes & Papeterie",
+    "description": "Votre première impression professionnelle. Nos cartes marquent les esprits.",
+    "details": ["Format 85 × 55 mm", "Papier 400 g/m² couché mat ou brillant", "Finitions : pelliculage, vernis sélectif", "Livraison dès 250 ex."],
+    "prixIndicatif": "À partir de 15 000 FCFA",
+    "popular": true
+  },
+  {
+    "id": 10,
+    "nom": "Carte de visite premium",
+    "categorie": "Cartes & Papeterie",
+    "description": "Texture veloutée, angles arrondis — l'excellence à portée de main.",
+    "details": ["Format 85 × 55 mm", "Papier 600 g/m² soft-touch", "Dorure à chaud disponible", "Angles arrondis"],
+    "prixIndicatif": "À partir de 28 000 FCFA",
+    "popular": false
+  },
+  {
+    "id": 11,
+    "nom": "Enveloppe & Papier en-tête",
+    "categorie": "Cartes & Papeterie",
+    "description": "Vos courriers à l'image de votre marque.",
+    "details": ["Enveloppes C5 / DL", "Papier en-tête A4 80 g/m²", "Impression recto couleur"],
+    "prixIndicatif": "Sur devis",
+    "popular": false
+  },
+  {
+    "id": 12,
+    "nom": "Tee-shirt personnalisé",
+    "categorie": "Textile & Vêtements",
+    "description": "Impression numérique ou sérigraphie sur tout type de textile.",
+    "details": ["Tailles XS à 3XL", "Impression recto et/ou verso", "Coton ou polyester", "Couleur de tissu au choix"],
+    "prixIndicatif": "À partir de 8 500 FCFA / pièce",
+    "popular": true
+  },
+  {
+    "id": 13,
+    "nom": "Polo brodé",
+    "categorie": "Textile & Vêtements",
+    "description": "Broderie premium pour vos uniformes et vêtements corporate.",
+    "details": ["Broderie numérique haute précision", "Logo ou texte", "Tailles XS à 3XL", "Tissu piqué 100 % coton"],
+    "prixIndicatif": "À partir de 15 000 FCFA / pièce",
+    "popular": false
+  },
+  {
+    "id": 14,
+    "nom": "Casquette & Accessoires",
+    "categorie": "Textile & Vêtements",
+    "description": "Casquettes, sacs, tabliers — personnalisez tous vos objets.",
+    "details": ["Impression ou broderie", "Casquettes, sacs, tabliers, etc.", "Commande à partir de 12 pièces"],
+    "prixIndicatif": "Sur devis",
+    "popular": false
+  }
+]

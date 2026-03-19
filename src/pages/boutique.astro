@@ -1,0 +1,421 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import produits from '../content/produits.json';
+
+const categories = ['Tous', ...new Set(produits.map((p: any) => p.categorie))];
+
+const icones: Record<string, string> = {
+  'Flyers & Dépliants':        '🗞',
+  'Kakemono & Affichage':      '🖼',
+  'Grand format & Signalétique':'📐',
+  'Cartes & Papeterie':        '💳',
+  'Textile & Vêtements':       '👕',
+};
+---
+
+<BaseLayout
+  title="Boutique & Catalogue — Misrah Print"
+  description="Découvrez notre catalogue d'impression : flyers, kakemono, bâches, cartes de visite, textile. Demandez votre devis en ligne en 30 secondes.">
+
+  <!-- HERO -->
+  <section class="boutique-hero">
+    <div class="boutique-hero-inner">
+      <span class="section-label">Catalogue</span>
+      <h1>Nos <span>produits</span></h1>
+      <p>Sélectionnez un produit, consultez les prix indicatifs et demandez votre devis personnalisé en quelques secondes.</p>
+    </div>
+  </section>
+
+  <!-- CATALOGUE -->
+  <section class="boutique-section">
+    <div class="container">
+
+      <!-- Filtres -->
+      <div class="cat-filters">
+        {categories.map((cat, i) => (
+          <button class={`cat-btn${i === 0 ? ' active' : ''}`} data-cat={cat}>{cat}</button>
+        ))}
+      </div>
+
+      <!-- Grille produits -->
+      <div class="produits-grid" id="produitsGrid">
+        {produits.map((p: any) => (
+          <div class="produit-card reveal" data-cat={p.categorie}>
+            <div class="produit-header">
+              <span class="produit-icone">{icones[p.categorie] ?? '📦'}</span>
+              <span class="produit-cat">{p.categorie}</span>
+              {p.popular && <span class="badge-pop">Populaire</span>}
+            </div>
+            <div class="produit-body">
+              <h3>{p.nom}</h3>
+              <p class="produit-desc">{p.description}</p>
+              <ul class="produit-details">
+                {p.details.map((d: string) => <li>{d}</li>)}
+              </ul>
+            </div>
+            <div class="produit-footer">
+              <span class="produit-prix">{p.prixIndicatif}</span>
+              <button class="btn-devis" data-produit={p.nom}>
+                Demander un devis
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MODAL DEVIS -->
+  <div class="devis-overlay" id="devisOverlay">
+    <div class="devis-modal">
+      <button class="devis-close" id="devisClose" aria-label="Fermer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+
+      <div class="devis-modal-header">
+        <span class="devis-label">Devis gratuit</span>
+        <h2>Votre demande pour<br/><span id="devisProduitNom">—</span></h2>
+      </div>
+
+      <form name="devis" method="POST" data-netlify="true" action="/merci" class="devis-form">
+        <input type="hidden" name="form-name" value="devis"/>
+        <input type="hidden" name="produit" id="devisProduitInput"/>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="d-quantite">Quantité souhaitée</label>
+            <input type="number" id="d-quantite" name="quantite" placeholder="Ex : 500" min="1"/>
+          </div>
+          <div class="form-group">
+            <label for="d-format">Format / Taille</label>
+            <input type="text" id="d-format" name="format" placeholder="Ex : A5, 85×200 cm…"/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="d-nom">Nom complet *</label>
+            <input type="text" id="d-nom" name="nom" required placeholder="Votre nom"/>
+          </div>
+          <div class="form-group">
+            <label for="d-tel">Téléphone *</label>
+            <input type="tel" id="d-tel" name="telephone" required placeholder="07 XX XX XX XX"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="d-email">Email</label>
+          <input type="email" id="d-email" name="email" placeholder="votre@email.com"/>
+        </div>
+
+        <div class="form-group">
+          <label for="d-message">Précisions (couleurs, finitions, délai…)</label>
+          <textarea id="d-message" name="message" rows="3" placeholder="Décrivez vos besoins spécifiques…"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit-devis">
+          Envoyer ma demande
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+      </form>
+
+      <p class="devis-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+        Nous vous recontactons sous 24h pour affiner votre devis.
+      </p>
+    </div>
+  </div>
+
+</BaseLayout>
+
+<style>
+/* ── HERO ── */
+.boutique-hero {
+  padding: 160px 60px 80px;
+  background: var(--dark);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+.boutique-hero-inner { max-width: 680px; margin: 0 auto; }
+.boutique-hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--white);
+  margin: 12px 0 20px;
+}
+.boutique-hero h1 span { color: var(--red); }
+.boutique-hero p { color: var(--muted); font-size: 16px; line-height: 1.7; }
+
+/* ── SECTION ── */
+.boutique-section { padding: 80px 0 120px; background: var(--dark2); }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+
+/* ── FILTRES ── */
+.cat-filters {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-bottom: 52px;
+}
+.cat-btn {
+  padding: 9px 22px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--muted);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cat-btn:hover { border-color: var(--red); color: var(--white); }
+.cat-btn.active { background: var(--red); border-color: var(--red); color: white; }
+
+/* ── GRILLE ── */
+.produits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* ── CARD ── */
+.produit-card {
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: flex; flex-direction: column;
+  transition: border-color 0.25s, transform 0.25s;
+  overflow: hidden;
+}
+.produit-card:hover {
+  border-color: var(--red);
+  transform: translateY(-4px);
+}
+.produit-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 18px 20px 0;
+}
+.produit-icone { font-size: 22px; }
+.produit-cat {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); flex: 1;
+}
+.badge-pop {
+  background: rgba(232,23,26,0.15);
+  color: var(--red);
+  border: 1px solid rgba(232,23,26,0.3);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 2px;
+}
+.produit-body {
+  padding: 16px 20px 20px;
+  flex: 1;
+}
+.produit-body h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--white); margin: 0 0 8px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.produit-desc {
+  font-size: 13px; color: var(--muted);
+  line-height: 1.6; margin: 0 0 14px;
+}
+.produit-details {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.produit-details li {
+  font-size: 12px; color: var(--muted);
+  padding-left: 14px; position: relative;
+}
+.produit-details li::before {
+  content: '—';
+  position: absolute; left: 0;
+  color: var(--red); font-size: 10px;
+}
+.produit-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  gap: 12px; flex-wrap: wrap;
+}
+.produit-prix {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--red);
+}
+.btn-devis {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 18px;
+  background: var(--red); color: white;
+  border: none; border-radius: 3px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.btn-devis:hover { background: var(--red-dark); }
+
+/* ── MODAL ── */
+.devis-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(10,12,20,0.85);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.devis-overlay.active { opacity: 1; pointer-events: all; }
+
+.devis-modal {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  width: 100%; max-width: 600px;
+  max-height: 90vh; overflow-y: auto;
+  padding: 40px;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s;
+}
+.devis-overlay.active .devis-modal { transform: translateY(0); }
+
+.devis-close {
+  position: absolute; top: 16px; right: 16px;
+  background: var(--dark3); border: 1px solid var(--border);
+  border-radius: 50%; width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); cursor: pointer;
+  transition: all 0.2s;
+}
+.devis-close:hover { color: white; border-color: var(--red); }
+
+.devis-modal-header { margin-bottom: 28px; }
+.devis-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--red);
+}
+.devis-modal-header h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px; font-weight: 800;
+  text-transform: uppercase; color: var(--white);
+  margin: 6px 0 0; line-height: 1.2;
+}
+.devis-modal-header h2 span { color: var(--red); }
+
+.devis-form { display: flex; flex-direction: column; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--muted);
+}
+.form-group input,
+.form-group textarea {
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--white);
+  padding: 12px 14px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--red);
+}
+.form-group textarea { resize: vertical; }
+
+.btn-submit-devis {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 15px 28px;
+  background: var(--red); color: white;
+  border: none; border-radius: 3px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 4px;
+}
+.btn-submit-devis:hover { background: var(--red-dark); }
+
+.devis-note {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--muted);
+  margin-top: 16px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .produits-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .boutique-hero { padding: 130px 24px 60px; }
+  .container { padding: 0 24px; }
+  .produits-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .devis-modal { padding: 28px 20px; }
+}
+</style>
+
+<script>
+  // ── FILTRES ──
+  const catBtns = document.querySelectorAll<HTMLButtonElement>('.cat-btn');
+  const cards   = document.querySelectorAll<HTMLElement>('.produit-card');
+
+  catBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      catBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      cards.forEach(card => {
+        const visible = cat === 'Tous' || card.dataset.cat === cat;
+        card.style.display = visible ? '' : 'none';
+      });
+    });
+  });
+
+  // ── MODAL ──
+  const overlay     = document.getElementById('devisOverlay')!;
+  const produitNom  = document.getElementById('devisProduitNom')!;
+  const produitInput = document.getElementById('devisProduitInput') as HTMLInputElement;
+
+  function openModal(nomProduit: string) {
+    produitNom.textContent  = nomProduit;
+    produitInput.value      = nomProduit;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.btn-devis').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.produit ?? ''));
+  });
+
+  document.getElementById('devisClose')!.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
